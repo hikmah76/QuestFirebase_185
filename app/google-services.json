@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "555483937499",
+    "project_id": "mahasiswa-4bcdc",
+    "storage_bucket": "mahasiswa-4bcdc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555483937499:android:679da044c8a88530266afe",
+        "android_client_info": {
+          "package_name": "com.example.cloud_firestore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6PMix9Ys8cpdp652bH5jux6HN6rOWERI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
