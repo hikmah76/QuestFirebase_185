@@ -60,6 +60,7 @@ class InsertViewModel(
         uiEvent = InsertUiState()
         uiState = FormState.Idle
     }
+    // Fungsi untuk mereset pesan snackbar
     fun resetSnackBarMessage(){
         uiState = FormState.Idle
     }
