@@ -67,7 +67,7 @@ class InsertViewModel(
 
 }
 
-
+// Kelas sealed untuk mendefinisikan state form
 sealed class FormState{
     object Idle: FormState()
     object Loading : FormState()
