@@ -23,7 +23,7 @@ class NetworkMahasiswaRepository (
                     val mhsList = value.documents.mapNotNull {
                         it.toObject(Mahasiswa::class.java)!!
                     }
-                    trySend(mhsList)
+                    trySend(mhsList)  // Mengirim data mahasiswa ke flow
                 }
             }
         awaitClose { mhsCollection.remove()
