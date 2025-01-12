@@ -8,6 +8,7 @@ class MahasiswaApplications: Application() {
     lateinit var container: AppContainer
     override fun onCreate() {
         super.onCreate()
+        // Menginisialisasi container dengan instance dari MahasiswaContainer
         container= MahasiswaContainer()
     }
 }
