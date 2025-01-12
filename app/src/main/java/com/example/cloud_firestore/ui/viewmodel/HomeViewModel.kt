@@ -48,6 +48,7 @@ class HomeViewModel(private val mhs: MahasiswaRepository
         }
     }
 
+    // Fungsi untuk menghapus mahasiswa dari repository
     fun deleteMahasiswa(mahasiswa: Mahasiswa){
         viewModelScope.launch {
             try {
