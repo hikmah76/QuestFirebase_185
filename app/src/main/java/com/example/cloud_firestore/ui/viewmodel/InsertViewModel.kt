@@ -24,6 +24,7 @@ class InsertViewModel(
             insertUiEvent = mahasiswaEvent
         )
     }
+    // Fungsi untuk validasi field input
     fun validateFields(): Boolean{
         val  event = uiEvent.insertUiEvent
         val errorState = FormErrorState(
