@@ -48,7 +48,7 @@ class NetworkMahasiswaRepository (
             throw Exception("Gagal Mengupdate data mahasiswa: ${e.message}")
         }
     }
-
+    // Fungsi untuk menghapus data mahasiswa berdasarkan NIM
     override suspend fun deleteMahasiswa(mahasiswa: Mahasiswa) {
         try {
             firestore.collection("Mahasiswa")
