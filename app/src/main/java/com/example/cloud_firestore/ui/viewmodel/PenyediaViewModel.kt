@@ -8,8 +8,11 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.cloud_firestore.MahasiswaApplications
 
 object PenyediaViewModel {
+    // Factory untuk membuat instance ViewModel dengan menggunakan viewModelFactory
     val Factory = viewModelFactory {
         initializer { HomeViewModel(aplikasiMahasiswa().container.mahasiswaRepository) }
+        initializer { InsertViewModel(aplikasiMahasiswa().container.mahasiswaRepository) }
+
 
     }
 }
