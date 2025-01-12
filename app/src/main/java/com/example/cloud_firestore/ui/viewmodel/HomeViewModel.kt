@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import kotlin.Exception
 
 sealed class HomeUiState {
+    // State ketika data mahasiswa berhasil diambil, membawa list mahasiswa
     data class Success(val mahasiswa: List<Mahasiswa>) : HomeUiState()
     data class Error(val  exception: Throwable): HomeUiState()
     object Loading : HomeUiState()
@@ -42,6 +43,16 @@ class HomeViewModel(private val mhs: MahasiswaRepository
                         HomeUiState.Success(it)
                     }
                 }
+        }
+    }
+
+    fun deleteMahasiswa(mahasiswa: Mahasiswa){
+        viewModelScope.launch {
+            try {
+                mhs.deleteMahasiswa(mahasiswa)
+            }catch (e: Exception){
+                mhsUIState = HomeUiState.Error(e)
+            }
         }
     }
 
