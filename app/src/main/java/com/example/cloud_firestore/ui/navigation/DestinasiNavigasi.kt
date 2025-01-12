@@ -4,7 +4,7 @@ interface DestinasiNavigasi {
     val route: String
     val titleRes: String
 }
-
+// Objek DestinasiHome mengimplementasikan interface DestinasiNavigasi.
 object DestinasiHome: DestinasiNavigasi{
     override val route: String = "home"
     override val titleRes: String = "Home"
