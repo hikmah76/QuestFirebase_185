@@ -31,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -47,13 +48,18 @@ import com.example.cloud_firestore.ui.viewmodel.PenyediaViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen (
+fun HomeScreen(
     navigateToItemEntry: () -> Unit,
     modifier: Modifier = Modifier,
-    onDetailClick: (String) -> Unit = {},
-    viewModel: HomeViewModel = viewModel(factory = PenyediaViewModel.Factory)
-) {
+    onDetailClick:(String) -> Unit = {},
+    viewModel : HomeViewModel = viewModel(factory = PenyediaViewModel.Factory)
+){
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    LaunchedEffect (Unit) {
+        viewModel.getMhs()
+    }
+
     Scaffold (
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -67,16 +73,16 @@ fun HomeScreen (
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.padding(18.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add Mahasiswa")
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Mahasiswa")
             }
         },
-    ) { innerPadding ->
+    ){innerPadding->
         HomeStatus(
             homeUiState = viewModel.mhsUIState,
-            retryAction = {viewModel.getMhs()}, modifier = Modifier.padding(innerPadding),
-            onDetailClick = onDetailClick, onDeleteClick = {
+            retryAction = {viewModel.getMhs()}, Modifier.padding(innerPadding),
+            onDetailClick = onDetailClick,
+            onDeleteClick = {
+
                 viewModel.getMhs()
             }
         )
@@ -84,18 +90,20 @@ fun HomeScreen (
 }
 
 @Composable
-fun HomeStatus (
+fun HomeStatus(
     homeUiState: HomeUiState,
     retryAction: () -> Unit,
     modifier: Modifier = Modifier,
     onDeleteClick: (String) -> Unit = {},
-    onDetailClick: (String) -> Unit
+    onDetailClick: (String) -> Unit = {}
 ) {
     when (homeUiState) {
         is HomeUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
-        is HomeUiState.Success ->
+        is HomeUiState.Success -> {
+            // Tampilan sukses dengan daftar mahasiswa
             MhsLayout(
-                mahasiswa = homeUiState.mahasiswa, modifier = modifier.fillMaxWidth(),
+                mahasiswa = homeUiState.mahasiswa,
+                modifier = modifier.fillMaxWidth(),
                 onDetailClick = {
                     onDetailClick(it.nim)
                 },
@@ -103,27 +111,32 @@ fun HomeStatus (
                     onDeleteClick(it)
                 }
             )
-        is HomeUiState.Error -> OnError(retryAction = retryAction, modifier = modifier.fillMaxSize(),
-            message = homeUiState.exception.message ?: "Error")
+        }
+        is HomeUiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize(),
+            message = homeUiState.exception.message?: "ERROR")
     }
 }
 
 @Composable
-fun OnLoading (modifier: Modifier = Modifier) {
-    Column (modifier .fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally){
+fun OnLoading(modifier: Modifier = Modifier,){
+    Column (
+        modifier.fillMaxSize(), verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
         CircularProgressIndicator()
     }
-
 }
 
+
 @Composable
-fun OnError(retryAction:() -> Unit, modifier: Modifier = Modifier, message: String) {
-    Column (
+fun OnError(retryAction: () -> Unit, modifier: Modifier = Modifier, message : String) {
+    Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        Text (text = message, modifier = Modifier.padding(16.dp))
+    ) {
+
+        Text(text = message, modifier = Modifier.padding(16.dp))
         Button(onClick = retryAction) {
             Text("Retry")
         }
@@ -131,42 +144,41 @@ fun OnError(retryAction:() -> Unit, modifier: Modifier = Modifier, message: Stri
 }
 
 @Composable
-fun MhsLayout (
+fun MhsLayout(
     mahasiswa: List<Mahasiswa>,
     modifier: Modifier = Modifier,
     onDetailClick: (Mahasiswa) -> Unit,
     onDeleteClick: (String) -> Unit = {}
 ) {
-    LazyColumn (
+    LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        items(mahasiswa) { mahasiswa ->
+        items(mahasiswa) { mhs ->
             MhsCard(
-                mahasiswa = mahasiswa,
+                mahasiswa = mhs,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onDetailClick(mahasiswa)},
-                onDeleteClick = {
-                    onDeleteClick(it)
-                }
-            )
+                    .clickable { onDetailClick(mhs) }
+            ) {
+                onDeleteClick(it)
+            }
         }
     }
 }
 
 @Composable
-fun MhsCard (
+fun MhsCard(
     mahasiswa: Mahasiswa,
     modifier: Modifier = Modifier,
     onDeleteClick: (String) -> Unit = {}
-) {
-    Card (
+){
+    Card(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-    ) {
+    ){
         Column (
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -174,28 +186,29 @@ fun MhsCard (
             Row (
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text (
+            ){
+                Text(
                     text = mahasiswa.nama,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleLarge,
                 )
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = {onDeleteClick(mahasiswa.nim)}) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = null,
+                        contentDescription = null
                     )
                 }
-                Text (
+                Text(
                     text = mahasiswa.nim,
                     style = MaterialTheme.typography.titleMedium
                 )
             }
-            Text (
+
+            Text(
                 text = mahasiswa.kelas,
                 style = MaterialTheme.typography.titleMedium
             )
-            Text (
+            Text(
                 text = mahasiswa.alamat,
                 style = MaterialTheme.typography.titleMedium
             )
