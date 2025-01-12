@@ -18,6 +18,7 @@ sealed class HomeUiState {
     data class Error(val  exception: Throwable): HomeUiState()
     object Loading : HomeUiState()
 }
+// ViewModel untuk mengelola data dan state UI pada layar Home
 class HomeViewModel(private val mhs: MahasiswaRepository
 ) : ViewModel() {
     var mhsUIState: HomeUiState by mutableStateOf(HomeUiState.Loading)
