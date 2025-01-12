@@ -12,6 +12,7 @@ import kotlinx.coroutines.tasks.await
 class NetworkMahasiswaRepository (
     private val firestore: FirebaseFirestore // Firestore instance untuk akses database cloud
 ): MahasiswaRepository {
+    // Fungsi untuk mendapatkan semua data mahasiswa secara real-time
     override suspend fun getAllMahasiswa(): Flow<List<Mahasiswa>> = callbackFlow { // callback yg mendukung real time
         val mhsCollection = firestore.collection("mahasiswa")
             .orderBy("nim", Query.Direction.ASCENDING)
