@@ -29,7 +29,7 @@ class NetworkMahasiswaRepository (
         awaitClose { mhsCollection.remove()
         }
     }
-
+    // Fungsi untuk menambahkan data mahasiswa ke Firestore
     override suspend fun insertMahasiswa(mahasiswa: Mahasiswa) {
         try {
             firestore.collection("Mahasiswa").add(mahasiswa).await()
