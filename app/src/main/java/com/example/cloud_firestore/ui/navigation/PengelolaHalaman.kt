@@ -28,7 +28,7 @@ fun PengelolaHalaman(
                 }
             )
         }
-
+        // Menentukan composable untuk rute DestinasiInsert.
         composable(DestinasiHome.route){
             InsertMhsView(
                 onBack = { navController.popBackStack() },
