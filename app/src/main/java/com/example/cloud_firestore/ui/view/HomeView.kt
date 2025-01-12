@@ -150,6 +150,7 @@ fun MhsLayout(
     onDetailClick: (Mahasiswa) -> Unit,
     onDeleteClick: (String) -> Unit = {}
 ) {
+    // Tampilan daftar mahasiswa dengan LazyColumn
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(16.dp),
