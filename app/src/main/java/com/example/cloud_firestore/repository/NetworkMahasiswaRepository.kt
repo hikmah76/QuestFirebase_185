@@ -61,7 +61,7 @@ class NetworkMahasiswaRepository (
     }
 
 
-
+    // Fungsi untuk mendapatkan data mahasiswa berdasarkan NIM secara real-time
     override suspend fun getMahasiswa(nim: String): Flow<Mahasiswa> = callbackFlow{
         val mhsDocument = firestore.collection("Mahasiswa")
             .document(nim)
