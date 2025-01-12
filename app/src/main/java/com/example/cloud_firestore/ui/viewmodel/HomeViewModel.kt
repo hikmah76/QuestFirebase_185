@@ -28,6 +28,7 @@ class HomeViewModel(private val mhs: MahasiswaRepository
         getMhs()
     }
 
+    // Fungsi untuk mengambil semua data mahasiswa dari repository
     fun getMhs() {
         viewModelScope.launch {
             mhs.getAllMahasiswa()
