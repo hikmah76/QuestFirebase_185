@@ -175,6 +175,7 @@ fun MhsCard(
     modifier: Modifier = Modifier,
     onDeleteClick: (String) -> Unit = {}
 ){
+    // card untuk menampilkan data mahasiswa
     Card(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
