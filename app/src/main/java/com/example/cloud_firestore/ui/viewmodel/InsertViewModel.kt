@@ -39,7 +39,7 @@ class InsertViewModel(
         uiEvent = uiEvent.copy(isEntryValid = errorState)
         return errorState.isValid()
     }
-
+    // Fungsi untuk menyimpan data mahasiswa
     fun insertMahasiswa(){
         if (validateFields()){
             viewModelScope.launch {
