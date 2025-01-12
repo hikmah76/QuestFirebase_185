@@ -37,7 +37,7 @@ class NetworkMahasiswaRepository (
             throw Exception("Gagal menambahkan data mahasiswa: ${e.message}")
         }
     }
-
+    // Fungsi untuk mengupdate data mahasiswa berdasarkan NIM
     override suspend fun updateMahasiswa(nim: String, mahasiswa: Mahasiswa) {
         try {
             firestore.collection("Mahasiswa")
