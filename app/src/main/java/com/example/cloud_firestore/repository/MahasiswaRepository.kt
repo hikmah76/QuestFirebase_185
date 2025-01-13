@@ -2,7 +2,8 @@ package com.example.cloud_firestore.repository
 
 import com.example.cloud_firestore.model.Mahasiswa
 import kotlinx.coroutines.flow.Flow
-
+import kotlinx.coroutines.flow.callbackFlow
+//repo
 interface MahasiswaRepository {
     suspend fun getAllMahasiswa(): Flow<List<Mahasiswa>>
 
@@ -10,7 +11,7 @@ interface MahasiswaRepository {
 
     suspend fun updateMahasiswa(nim: String, mahasiswa: Mahasiswa)
 
-    suspend fun deleteMahasiswa(nim: String)
+    suspend fun deleteMahasiswa(mahasiswa: Mahasiswa)
 
-    suspend fun getMahasiswaByNim(nim: String): Flow<Mahasiswa>
+    suspend fun getMahasiswa(nim: String): Flow<Mahasiswa>
 }
