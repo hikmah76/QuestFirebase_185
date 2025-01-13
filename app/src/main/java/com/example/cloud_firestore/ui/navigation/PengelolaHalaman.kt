@@ -17,7 +17,7 @@ fun PengelolaHalaman(
 ){
     NavHost(
         navController = navController,
-        startDestination = DestinasiHome.route,
+        startDestination = DestinasiHome.route, // Menentukan rute awal yang akan ditampilkan
         modifier = Modifier
     ) {
         // Menentukan composable untuk rute DestinasiHome.
@@ -29,7 +29,7 @@ fun PengelolaHalaman(
             )
         }
         // Menentukan composable untuk rute DestinasiInsert.
-        composable(DestinasiHome.route){
+        composable(DestinasiInsert.route){
             InsertMhsView(
                 onBack = { navController.popBackStack() },
                 onNavigate = {
