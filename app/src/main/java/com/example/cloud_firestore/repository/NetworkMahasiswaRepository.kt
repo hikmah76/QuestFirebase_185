@@ -9,12 +9,12 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
-class NetworkMahasiswaRepository (
+class NetworkMahasiswaRepository ( // repo
     private val firestore: FirebaseFirestore // Firestore instance untuk akses database cloud
 ): MahasiswaRepository {
     // Fungsi untuk mendapatkan semua data mahasiswa secara real-time
     override suspend fun getAllMahasiswa(): Flow<List<Mahasiswa>> = callbackFlow { // callback yg mendukung real time
-        val mhsCollection = firestore.collection("mahasiswa")
+        val mhsCollection = firestore.collection("Mahasiswa")
             .orderBy("nim", Query.Direction.ASCENDING)
             .addSnapshotListener {
                     value, error ->
@@ -53,7 +53,7 @@ class NetworkMahasiswaRepository (
         try {
             firestore.collection("Mahasiswa")
                 .document(mahasiswa.nim)
-                .set(mahasiswa)
+                .delete()
                 .await()
         } catch (e:Exception){
             throw Exception("Gagal menghapus data mahasiswa: ${e.message}")
