@@ -4,9 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.cloud_firestore.ui.view.HomeScreen
 import com.example.cloud_firestore.ui.view.InsertMhsView
 
@@ -30,6 +32,14 @@ fun PengelolaHalaman(
         }
         // Menentukan composable untuk rute DestinasiInsert.
         composable(DestinasiInsert.route){
+            InsertMhsView(
+                onBack = { navController.popBackStack() },
+                onNavigate = {
+                    navController.navigate(DestinasiHome.route)
+                }
+            )
+        }
+        composable(DestinasiDetail.route){
             InsertMhsView(
                 onBack = { navController.popBackStack() },
                 onNavigate = {

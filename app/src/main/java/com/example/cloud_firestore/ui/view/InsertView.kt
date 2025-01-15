@@ -100,7 +100,7 @@ fun InsertMhsView(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(16.dp)
+                .padding(5.dp)
         ) {
             InsertBodyMhs(
                 uiState = uiEvent,
@@ -146,7 +146,7 @@ fun InsertBodyMhs(
                 CircularProgressIndicator(
                     color = Color.White,
                     modifier = Modifier
-                        .size(20.dp)
+                        .size(7.dp)
                         .padding(end = 8.dp)
                 )
                 Text("Loading...")
@@ -165,7 +165,7 @@ fun FormMahasiswa(
 
 ) {
     val jenisKelamin = listOf("Laki-laki", "Perempuan")
-    val kelas = listOf("A", "B", "C", "D", "E")
+
 
     Column (
         modifier = modifier.fillMaxWidth()
@@ -239,28 +239,54 @@ fun FormMahasiswa(
                 placeholder = { Text("Masukkan alamat") },
             )
         }
-        Text(text = errorState.alamat ?: "", color = Color.Red)
+        Text(text = errorState.jenisKelamin ?: "", color = Color.Red)
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Kelas")
-        Row {
-            kelas.forEach { kelas ->
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start
-                ) {
-                    RadioButton(
-                        selected = mahasiswaEvent.kelas == kelas,
-                        onClick = {
-                            onValueChange(mahasiswaEvent.copy(kelas =
-                            kelas))
-                        },
-                    )
-                    Text(text = kelas)
-                }
-            }
+        mahasiswaEvent.judulSkripsi?.let {
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = it,
+                onValueChange = {
+                    onValueChange(mahasiswaEvent.copy(judulSkripsi = it))
+                },
+                label = { Text("Judul Skripsi") },
+                isError = errorState.judulSkripsi != null,
+                placeholder = { Text("Masukkan Judul Skripsi") },
+            )
         }
         Text(
-            text = errorState.kelas ?: "",
+            text = errorState.judulSkripsi ?: "",
+            color = Color.Red
+        )
+        mahasiswaEvent.dospem1?.let {
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = it,
+                onValueChange = {
+                    onValueChange(mahasiswaEvent.copy(dospem1 = it))
+                },
+                label = { Text("Dospem 1") },
+                isError = errorState.dospem1 != null,
+                placeholder = { Text("Dospem 1") },
+            )
+        }
+        Text(
+            text = errorState.dospem2 ?: "",
+            color = Color.Red
+        )
+        mahasiswaEvent.dospem2?.let {
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = it,
+                onValueChange = {
+                    onValueChange(mahasiswaEvent.copy(dospem2 = it))
+                },
+                label = { Text("Dospem 1") },
+                isError = errorState.dospem2 != null,
+                placeholder = { Text("Dospem 2") },
+            )
+        }
+        Text(
+            text = errorState.dospem2 ?: "",
             color = Color.Red
         )
         mahasiswaEvent.angkatan?.let {

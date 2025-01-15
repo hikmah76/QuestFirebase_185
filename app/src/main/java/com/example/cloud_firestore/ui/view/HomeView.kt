@@ -39,7 +39,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.cloud_firestore.model.Mahasiswa
+import com.example.cloud_firestore.model.Kampus
 import com.example.cloud_firestore.ui.viewmodel.HomeUiState
 import com.example.cloud_firestore.ui.viewmodel.HomeViewModel
 import com.example.cloud_firestore.ui.viewmodel.PenyediaViewModel
@@ -145,9 +145,9 @@ fun OnError(retryAction: () -> Unit, modifier: Modifier = Modifier, message : St
 
 @Composable
 fun MhsLayout(
-    mahasiswa: List<Mahasiswa>,
+    mahasiswa: List<Kampus>,
     modifier: Modifier = Modifier,
-    onDetailClick: (Mahasiswa) -> Unit,
+    onDetailClick: (Kampus) -> Unit,
     onDeleteClick: (String) -> Unit = {}
 ) {
     // Tampilan daftar mahasiswa dengan LazyColumn
@@ -158,7 +158,7 @@ fun MhsLayout(
     ) {
         items(mahasiswa) { mhs ->
             MhsCard(
-                mahasiswa = mhs,
+                kampus = mhs,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { onDetailClick(mhs) }
@@ -171,7 +171,7 @@ fun MhsLayout(
 
 @Composable
 fun MhsCard(
-    mahasiswa: Mahasiswa,
+    kampus: Kampus,
     modifier: Modifier = Modifier,
     onDeleteClick: (String) -> Unit = {}
 ){
@@ -190,28 +190,28 @@ fun MhsCard(
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Text(
-                    text = mahasiswa.nama,
+                    text = kampus.nama,
                     style = MaterialTheme.typography.titleLarge,
                 )
                 Spacer(Modifier.weight(1f))
-                IconButton(onClick = {onDeleteClick(mahasiswa.nim)}) {
+                IconButton(onClick = {onDeleteClick(kampus.nim)}) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = null
                     )
                 }
                 Text(
-                    text = mahasiswa.nim,
+                    text = kampus.nim,
                     style = MaterialTheme.typography.titleMedium
                 )
             }
 
             Text(
-                text = mahasiswa.kelas,
+                text = kampus.judulSkripsi,
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = mahasiswa.alamat,
+                text = kampus.alamat,
                 style = MaterialTheme.typography.titleMedium
             )
         }

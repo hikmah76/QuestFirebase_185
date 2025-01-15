@@ -6,7 +6,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cloud_firestore.model.Mahasiswa
+import com.example.cloud_firestore.model.Kampus
+
 import com.example.cloud_firestore.repository.MahasiswaRepository
 import kotlinx.coroutines.launch
 
@@ -32,7 +33,9 @@ class InsertViewModel(
             nama = if (event.nama.isNotEmpty()) null else " Nama tidak boleh kosong",
             jenisKelamin = if (event.jenisKelamin.isNotEmpty()) null else " Jenis Kelamin tidak boleh kosong",
             alamat = if (event.alamat.isNotEmpty()) null else " Alamat tidak boleh kosong",
-            kelas = if (event.kelas.isNotEmpty()) null else " Kelas tidak boleh kosong",
+            judulSkripsi = if (event.judulSkripsi.isNotEmpty()) null else " Nama tidak boleh kosong",
+            dospem1 = if (event.dospem1.isNotEmpty()) null else " Dospem1 tidak boleh kosong",
+            dospem2 = if (event.dospem2.isNotEmpty()) null else " Dospem2 tidak boleh kosong",
             angkatan = if (event.angkatan.isNotEmpty()) null else " Angkatan tidak boleh kosong",
 
         )
@@ -85,12 +88,14 @@ data class FormErrorState(
     val nama: String? = null,
     val jenisKelamin: String? = null,
     val alamat: String? = null,
-    val kelas: String? = null,
+    val judulSkripsi: String? = null,
+    val dospem1: String? = null,
+    val dospem2: String? = null,
     val angkatan: String? = null,
 
 ){
     fun isValid(): Boolean{
-        return nim == null &&  nama == null && jenisKelamin == null && alamat == null && kelas == null &&
+        return nim == null &&  nama == null && jenisKelamin == null && alamat == null && judulSkripsi == null && dospem1 == null && dospem2 == null &&
                 angkatan == null
     }
 }
@@ -100,15 +105,19 @@ data class MahasiswaEvent(
     val nama: String = "",
     val jenisKelamin: String = "",
     val alamat: String = "",
-    val kelas: String = "",
+    val judulSkripsi: String= "",
+    val dospem1: String = "",
+    val dospem2: String = "",
     val angkatan: String = ""
 )
 
-fun MahasiswaEvent.toMhsModel(): Mahasiswa = Mahasiswa(
+fun MahasiswaEvent.toMhsModel(): Kampus = Kampus(
     nim = nim,
     nama = nama,
     jenisKelamin = jenisKelamin,
     alamat = alamat,
-    kelas = kelas,
+    judulSkripsi = judulSkripsi,
+    dospem1 = dospem1,
+    dospem2 = dospem1,
     angkatan = angkatan
 )

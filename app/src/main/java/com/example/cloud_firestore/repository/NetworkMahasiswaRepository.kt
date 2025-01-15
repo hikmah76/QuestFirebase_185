@@ -1,6 +1,7 @@
 package com.example.cloud_firestore.repository
 
-import com.example.cloud_firestore.model.Mahasiswa
+import com.example.cloud_firestore.model.Kampus
+
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.toObject
@@ -13,15 +14,15 @@ class NetworkMahasiswaRepository ( // repo
     private val firestore: FirebaseFirestore // Firestore instance untuk akses database cloud
 ): MahasiswaRepository {
     // Fungsi untuk mendapatkan semua data mahasiswa secara real-time
-    override suspend fun getAllMahasiswa(): Flow<List<Mahasiswa>> = callbackFlow { // callback yg mendukung real time
-        val mhsCollection = firestore.collection("Mahasiswa")
+    override suspend fun getAllMahasiswa(): Flow<List<Kampus>> = callbackFlow { // callback yg mendukung real time
+        val mhsCollection = firestore.collection("kampus")
             .orderBy("nim", Query.Direction.ASCENDING)
             .addSnapshotListener {
                     value, error ->
 
                 if (value != null) {
                     val mhsList = value.documents.mapNotNull {
-                        it.toObject(Mahasiswa::class.java)!!
+                        it.toObject(Kampus::class.java)!!
                     }
                     trySend(mhsList)  // Mengirim data mahasiswa ke flow
                 }
@@ -30,44 +31,44 @@ class NetworkMahasiswaRepository ( // repo
         }
     }
     // Fungsi untuk menambahkan data mahasiswa ke Firestore
-    override suspend fun insertMahasiswa(mahasiswa: Mahasiswa) {
+    override suspend fun insertMahasiswa(kampus: Kampus) {
         try {
-            firestore.collection("Mahasiswa").add(mahasiswa).await()
+            firestore.collection("kampus").add(kampus).await()
         } catch (e:Exception){
-            throw Exception("Gagal menambahkan data mahasiswa: ${e.message}")
+            throw Exception("Gagal menambahkan data kampus: ${e.message}")
         }
     }
     // Fungsi untuk mengupdate data mahasiswa berdasarkan NIM
-    override suspend fun updateMahasiswa(nim: String, mahasiswa: Mahasiswa) {
+    override suspend fun updateMahasiswa(nim: String, kampus: Kampus) {
         try {
-            firestore.collection("Mahasiswa")
-                .document(mahasiswa.nim)
-                .set(mahasiswa)
+            firestore.collection("kampus")
+                .document(kampus.nim)
+                .set(kampus)
                 .await()
         } catch (e:Exception){
-            throw Exception("Gagal Mengupdate data mahasiswa: ${e.message}")
+            throw Exception("Gagal Mengupdate data kampus: ${e.message}")
         }
     }
     // Fungsi untuk menghapus data mahasiswa berdasarkan NIM
-    override suspend fun deleteMahasiswa(mahasiswa: Mahasiswa) {
+    override suspend fun deleteMahasiswa(kampus: Kampus) {
         try {
-            firestore.collection("Mahasiswa")
-                .document(mahasiswa.nim)
+            firestore.collection("kampus")
+                .document(kampus.nim)
                 .delete()
                 .await()
         } catch (e:Exception){
-            throw Exception("Gagal menghapus data mahasiswa: ${e.message}")
+            throw Exception("Gagal menghapus data kampus: ${e.message}")
         }
     }
 
 
     // Fungsi untuk mendapatkan data mahasiswa berdasarkan NIM secara real-time
-    override suspend fun getMahasiswa(nim: String): Flow<Mahasiswa> = callbackFlow{
-        val mhsDocument = firestore.collection("Mahasiswa")
+    override suspend fun getMahasiswa(nim: String): Flow<Kampus> = callbackFlow{
+        val mhsDocument = firestore.collection("kampus")
             .document(nim)
             .addSnapshotListener{ value, error ->
                 if (value != null){
-                    val mhs = value.toObject(Mahasiswa::class.java)!!
+                    val mhs = value.toObject(Kampus::class.java)!!
                     trySend(mhs)
                 }
             }
